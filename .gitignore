@@ -1,0 +1,226 @@
+#
+# Mac OS
+#
+
+# General
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Icon (ends with two \r)
+Icon
+
+# Thumbnails
+._*
+
+
+#
+# Linux
+#
+
+*~
+
+# KDE directory preferences
+.directory
+
+# .nfs files are created when an open file is removed but is still being accessed
+.nfs*
+
+
+#
+# Windows
+#
+
+# Windows thumbnail cache files
+Thumbs.db
+
+# Dump file
+*.stackdump
+
+# Folder config file
+[Dd]esktop.ini
+
+# Windows shortcuts
+*.lnk
+
+
+#
+# Vim
+#
+
+# Swap
+[._]*.s[a-v][a-z]
+[._]*.sw[a-p]
+[._]s[a-v][a-z]
+[._]sw[a-p]
+
+# Session
+Session.vim
+
+# Temporary
+*~
+
+
+#
+# Eclipse
+#
+
+tmp/
+.settings/
+.metadata
+.loadpath
+.recommenders
+local.properties
+*.tmp
+*.bak
+*.swp
+*~.nib
+
+# Java annotation processor (APT)
+.factorypath
+
+
+# Eclipse Core
+.project
+
+# JDT specific
+.classpath
+
+# STS (Spring Tool Suite)
+.springBeans
+
+# Code Recommenders
+.recommenders/
+
+
+#
+# JetBrains
+#
+
+# Directory-based project format
+.idea/
+
+# File-based project format
+*.iws
+
+# Modules
+*.ipr
+*.iml
+
+# IntelliJ
+out/
+
+
+#
+# NetBeans
+#
+
+nbproject/private/
+build/
+nbbuild/
+dist/
+nbdist/
+.nb-gradle/
+
+
+#
+# Archives
+#
+
+*.7z
+*.jar
+*.war
+*.ear
+*.rar
+*.zip
+*.gz
+*.tgz
+*.bzip
+*.bz2
+*.xz
+*.lzma
+*.cab
+
+# Packing formats
+*.iso
+*.tar
+
+# Package management formats
+*.dmg
+*.xpi
+*.gem
+*.egg
+*.deb
+*.rpm
+*.msi
+*.msm
+*.msp
+
+
+#
+# Runtime
+#
+
+# Log files
+*.log*
+*.out
+*.err
+
+# Processes
+*.pid
+*.seed
+*.lock
+
+
+#
+# Java
+#
+
+# Compiled class file
+*.class
+
+# Virtual Machine crash logs
+hs_err_pid*
+
+
+#
+# Gradle
+#
+
+.gradle
+gradlew
+gradlew.bat
+gradle/
+build/
+
+# Gradle GUI config
+gradle-app.setting
+
+# Gradle wrapper
+gradle-wrapper.jar
+
+# Cache of project
+.gradletasknamecache
+
+
+#
+# Maven
+#
+
+.mvn/
+target/
+pom.xml.tag
+pom.xml.releaseBackup
+pom.xml.versionsBackup
+pom.xml.next
+release.properties
+dependency-reduced-pom.xml
+buildNumber.properties
+
+
+#
+# Project Specific
+#
+
+## Add project-specific rules here
+
