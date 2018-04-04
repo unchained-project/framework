@@ -17,6 +17,7 @@
     <modules>
         <module>../unchained-parent</module>
         <module>../unchained-commons</module>
+        <module>../unchained-api</module>
     </modules>
 
 </project>
