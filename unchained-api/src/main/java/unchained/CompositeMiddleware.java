@@ -10,15 +10,16 @@ package unchained;
  * @param <O>
  * @param <M>
  * @param <Q>
+ * @param <H>
  */
 public interface CompositeMiddleware<
-    W extends CompositeMiddleware<W, L, C, I, O, M, Q>,
+    W extends CompositeMiddleware<W, L, C, I, O, M, Q, H>,
     L extends ChainLifecycle,
     C extends ChainContext<L, C>,
     I extends Input<L, C>,
     O extends Output<L, C, I>,
-    M extends Matcher<C, I>,
-    Q> extends Middleware<L, C, I, O, Q> {
+    M extends Matcher<C, I, H>,
+    Q, H> extends Middleware<L, C, I, O, Q> {
 
     /**
      * TODO: doc
