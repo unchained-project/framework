@@ -8,7 +8,7 @@ package unchained;
  */
 public interface Input<
     L extends ChainLifecycle,
-    C extends ChainContext<L, C>> {
+    C extends ChainContext<C, L>> {
 
     /**
      * Gives access to the context associated with this input.

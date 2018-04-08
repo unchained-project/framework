@@ -5,7 +5,7 @@ import java.util.Set;
 /**
  * This interface encapsulates a malleable configuration which contains arbitrary values.
  */
-public interface Configuration {
+public interface Configuration<C extends Configuration> {
 
     /**
      * This interface represents a configuration option definition, which lets us do things like statically binding

@@ -15,11 +15,12 @@ package unchained;
 public interface CompositeMiddleware<
     W extends CompositeMiddleware<W, L, C, I, O, M, Q, H>,
     L extends ChainLifecycle,
-    C extends ChainContext<L, C>,
+    C extends ChainContext<C, L>,
     I extends Input<L, C>,
     O extends Output<L, C, I>,
     M extends Matcher<C, I, H>,
-    Q, H> extends Middleware<L, C, I, O, Q> {
+    Q,
+    H> extends Middleware<L, C, I, O, Q> {
 
     /**
      * TODO: doc

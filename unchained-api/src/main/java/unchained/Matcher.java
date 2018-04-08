@@ -8,7 +8,7 @@ package unchained;
  * @param <E>
  */
 public interface Matcher<
-    C extends ChainContext<? extends ChainLifecycle, C>,
+    C extends ChainContext<C, ? extends ChainLifecycle>,
     I extends Input<? extends ChainLifecycle, C>,
     E> {
 
@@ -22,7 +22,7 @@ public interface Matcher<
      * @param <T>
      */
     interface Compiler<
-        C extends ChainContext<? extends ChainLifecycle, C>,
+        C extends ChainContext<C, ? extends ChainLifecycle>,
         I extends Input<? extends ChainLifecycle, C>,
         M extends Matcher<C, I, T>,
         S,

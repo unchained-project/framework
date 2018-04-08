@@ -16,7 +16,7 @@ import java.util.concurrent.CompletableFuture;
  */
 public interface Middleware<
     L extends ChainLifecycle,
-    C extends ChainContext<L, C>,
+    C extends ChainContext<C, L>,
     I extends Input<L, C>,
     O extends Output<L, C, I>,
     Q> {

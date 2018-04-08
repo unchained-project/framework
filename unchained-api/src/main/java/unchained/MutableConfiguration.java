@@ -5,7 +5,7 @@ package unchained;
  *
  * @param <C>
  */
-public interface MutableConfiguration<C extends MutableConfiguration<C>> extends Configuration {
+public interface MutableConfiguration<C extends MutableConfiguration<C>> extends Configuration<C> {
 
     /**
      * Enables the provided key by setting it to {@code true}.

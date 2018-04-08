@@ -7,7 +7,7 @@ import java.util.concurrent.Executor;
 /**
  * TODO: doc
  */
-public interface RequestContext extends ChainContext<RequestLifecycle, RequestContext> {
+public interface RequestContext extends ChainContext<RequestContext, RequestLifecycle> {
 
     /**
      * Convenient method to get access to the {@link Executor} bound to this context.

@@ -9,7 +9,7 @@ package unchained;
  */
 public interface Output<
     L extends ChainLifecycle,
-    C extends ChainContext<L, C>,
+    C extends ChainContext<C, L>,
     I extends Input<L, C>> {
 
     /**
