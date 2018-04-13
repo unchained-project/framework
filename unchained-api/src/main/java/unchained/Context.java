@@ -34,7 +34,7 @@ public interface Context<L extends Lifecycle> {
      * @param <E> the type.
      * @return the object or {@code null} if no such object exists.
      */
-    <E> E get(Class<? super E> type);
+    <E> E get(Class<E> type);
 
     /**
      * Returns an object with the given name and type.
@@ -53,7 +53,7 @@ public interface Context<L extends Lifecycle> {
      * @param <E> the type.
      * @return a collection of all objects of the given type.
      */
-    <E> Collection<? extends E> getAll(Class<E> type);
+    <E> Collection<E> getAll(Class<E> type);
 
     /**
      * Checks to see if an object with the given name can be found in this context.
