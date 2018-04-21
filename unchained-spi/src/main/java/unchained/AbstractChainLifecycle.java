@@ -1,7 +1,4 @@
-package unchained.inventory;
-
-import unchained.ChainLifecycle;
-import unchained.Lifecycle;
+package unchained;
 
 import java.util.concurrent.atomic.AtomicBoolean;
 

@@ -1,7 +1,5 @@
-package unchained.inventory;
+package unchained;
 
-import unchained.Context;
-import unchained.Lifecycle;
 import unchained.error.NoSuchBeanException;
 
 import java.util.*;

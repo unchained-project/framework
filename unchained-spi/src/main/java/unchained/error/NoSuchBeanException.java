@@ -1,5 +1,7 @@
 package unchained.error;
 
+import unchained.error.ContextException;
+
 public class NoSuchBeanException extends ContextException {
 
     public NoSuchBeanException(String beanName) {

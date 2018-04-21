@@ -1,6 +1,4 @@
-package unchained.inventory;
-
-import unchained.*;
+package unchained;
 
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;

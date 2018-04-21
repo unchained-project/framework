@@ -1,7 +1,5 @@
-package unchained.inventory;
+package unchained;
 
-import unchained.ApplicationContext;
-import unchained.ApplicationLifecycle;
 import unchained.error.TooManyBeansException;
 
 import java.util.*;

@@ -1,4 +1,4 @@
-package unchained.inventory;
+package unchained;
 
 import unchained.Context;
 import unchained.Lifecycle;
