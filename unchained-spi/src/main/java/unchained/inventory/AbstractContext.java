@@ -2,10 +2,7 @@ package unchained.inventory;
 
 import unchained.Context;
 import unchained.Lifecycle;
-import unchained.error.NoSuchBeanException;
 
-import java.util.Collection;
-import java.util.Collections;
 import java.util.Map;
 import java.util.Set;
 
@@ -28,9 +25,7 @@ public abstract class AbstractContext<L extends Lifecycle> implements Context<L>
      *
      * @return
      */
-    protected Map<String, Object> properties() {
-        return Collections.emptyMap();
-    }
+    protected abstract Map<String, Object> properties();
 
     /**
      * ${@inheritDoc}
@@ -38,69 +33,6 @@ public abstract class AbstractContext<L extends Lifecycle> implements Context<L>
     @Override
     public L lifecycle() {
         return lifecycle;
-    }
-
-    /**
-     * ${@inheritDoc}
-     */
-    @Override
-    public <E> E get(String name) {
-        // TODO: assertion
-        throw new NoSuchBeanException(name);
-    }
-
-    /**
-     * ${@inheritDoc}
-     */
-    @Override
-    public <E> E get(Class<E> type) {
-        // TODO: assertion
-        throw new NoSuchBeanException(type);
-    }
-
-    /**
-     * ${@inheritDoc}
-     */
-    @Override
-    public <E> E get(String name, Class<E> type) {
-        // TODO: assertion
-        throw new NoSuchBeanException(type);
-    }
-
-    /**
-     * ${@inheritDoc}
-     */
-    @Override
-    public <E> Collection<E> getAll(Class<E> type) {
-        // TODO: assertion
-        return Collections.emptySet();
-    }
-
-    /**
-     * ${@inheritDoc}
-     */
-    @Override
-    public boolean has(String name) {
-        // TODO: assertion
-        return false;
-    }
-
-    /**
-     * ${@inheritDoc}
-     */
-    @Override
-    public boolean has(Class<?> type) {
-        // TODO: assertion
-        return false;
-    }
-
-    /**
-     * ${@inheritDoc}
-     */
-    @Override
-    public boolean has(String name, Class<?> type) {
-        // TODO: assertion
-        return false;
     }
 
     /**

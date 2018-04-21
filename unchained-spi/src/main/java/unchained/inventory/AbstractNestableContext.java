@@ -2,10 +2,9 @@ package unchained.inventory;
 
 import unchained.Context;
 import unchained.Lifecycle;
+import unchained.error.NoSuchBeanException;
 
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
 /**
  * TODO: doc
@@ -15,10 +14,12 @@ import java.util.Set;
 public abstract class AbstractNestableContext<L extends Lifecycle> extends AbstractContext<L> {
 
     private final Context<? extends Lifecycle> parent;
+    private HashMap<String, Object> properties;
 
     protected AbstractNestableContext(L lifecycle) {
         // TODO: assertion
         this(null, lifecycle);
+        properties = new HashMap<>();
     }
 
     protected AbstractNestableContext(Context<? extends Lifecycle> parent, L lifecycle) {
@@ -34,7 +35,7 @@ public abstract class AbstractNestableContext<L extends Lifecycle> extends Abstr
         if (parent != null) {
             return parent.get(name);
         }
-        return super.get(name);
+        throw new NoSuchBeanException(name);
     }
 
     /**
@@ -45,7 +46,7 @@ public abstract class AbstractNestableContext<L extends Lifecycle> extends Abstr
         if (parent != null) {
             return parent.get(type);
         }
-        return super.get(type);
+        throw new NoSuchBeanException(type);
     }
 
     /**
@@ -56,7 +57,7 @@ public abstract class AbstractNestableContext<L extends Lifecycle> extends Abstr
         if (parent != null) {
             return parent.get(name, type);
         }
-        return super.get(name, type);
+        throw new NoSuchBeanException(name, type);
     }
 
     /**
@@ -65,12 +66,9 @@ public abstract class AbstractNestableContext<L extends Lifecycle> extends Abstr
     @Override
     public <E> Collection<E> getAll(Class<E> type) {
         if (parent != null) {
-            final Set<E> allBeans = new HashSet<>();
-            allBeans.addAll(parent.getAll(type));
-            allBeans.addAll(super.getAll(type));
-            return allBeans;
+            return parent.getAll(type);
         }
-        return super.getAll(type);
+        return Collections.emptySet();
     }
 
     /**
@@ -104,8 +102,14 @@ public abstract class AbstractNestableContext<L extends Lifecycle> extends Abstr
             final Set<String> allNames = new HashSet<>();
             allNames.addAll(parent.propertyNames());
             allNames.addAll(super.propertyNames());
+            return allNames;
         }
         return super.propertyNames();
+    }
+
+    @Override
+    protected Map<String, Object> properties() {
+        return properties;
     }
 
 }
