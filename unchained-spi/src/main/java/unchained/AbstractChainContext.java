@@ -3,6 +3,10 @@ package unchained;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
+import static unchained.Utils.forceNotNull;
+import static unchained.commons.assertion.Assert.assertThat;
+import static unchained.commons.assertion.Assertions.isNotNull;
+
 /**
  * TODO: doc
  *
@@ -15,18 +19,16 @@ public abstract class AbstractChainContext<C extends ChainContext<C, L>, L exten
     private final Map<String, Object> properties;
 
     protected AbstractChainContext(C parent) {
-        // TODO: assertion
-        this(parent, parent.lifecycle(), null);
+        this(parent, forceNotNull(parent, "parent").lifecycle(), null);
     }
 
     protected AbstractChainContext(ApplicationContext applicationContext, L lifecycle) {
-        // TODO: assertion
-        this(applicationContext, lifecycle, null);
+        this(forceNotNull(applicationContext, "applicationContext"), forceNotNull(lifecycle, "lifecycle"),
+            null);
     }
 
     protected AbstractChainContext(Context<? extends Lifecycle> parent, L lifecycle, Map<String, Object> properties) {
-        // TODO: assertion(parent, lifecycle)
-        super(parent, lifecycle);
+        super(forceNotNull(parent, "parent"), forceNotNull(lifecycle, "lifecycle"));
         this.properties = properties == null ? new ConcurrentHashMap<>() : properties;
     }
 
@@ -41,7 +43,7 @@ public abstract class AbstractChainContext<C extends ChainContext<C, L>, L exten
     @Override
     @SuppressWarnings("unchecked")
     public C property(String name, Object value) {
-        // TODO: assertion(name)
+        assertThat(name, "propertyName", isNotNull());
         if (value == null) {
             properties().remove(name);
         } else {
@@ -49,6 +51,7 @@ public abstract class AbstractChainContext<C extends ChainContext<C, L>, L exten
         }
         return (C) this;
     }
+
 
 }
 

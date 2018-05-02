@@ -1,9 +1,14 @@
 package unchained;
 
+import unchained.commons.utils.MutabilityUtils;
 import unchained.error.TooManyBeansException;
 
 import java.util.*;
 import java.util.stream.Collectors;
+
+import static unchained.Utils.forceNotNull;
+import static unchained.commons.assertion.Assert.assertThat;
+import static unchained.commons.assertion.Assertions.isNotNull;
 
 /**
  * TODO: doc
@@ -30,8 +35,7 @@ public class SimpleApplicationContext extends AbstractNestableContext<Applicatio
      * @param instances
      */
     public SimpleApplicationContext(ApplicationContext parent, Map<String, Object> instances) {
-        // TODO: assertion(parent)
-        this(parent, parent.lifecycle(), instances);
+        this(forceNotNull(parent, "parent"), parent.lifecycle(), instances);
     }
 
     /**
@@ -42,10 +46,8 @@ public class SimpleApplicationContext extends AbstractNestableContext<Applicatio
      * @param instances
      */
     protected SimpleApplicationContext(ApplicationContext parent, ApplicationLifecycle lifecycle, Map<String, Object> instances) {
-        // TODO: assertion(lifecycle, instances)
-        super(parent, lifecycle);
-        // TODO: use `MutabilityUtils.immutableCopy` instead
-        this.instances = Collections.unmodifiableMap(instances);
+        super(forceNotNull(parent, "parent"), forceNotNull(lifecycle, "lifecycle"));
+        this.instances = MutabilityUtils.immutableCopy(instances);
     }
 
     private <E> Collection<E> findInstances(Class<E> type) {
@@ -61,6 +63,7 @@ public class SimpleApplicationContext extends AbstractNestableContext<Applicatio
     @Override
     @SuppressWarnings("unchecked")
     public <E> E get(String name) {
+        assertThat(name, "beanName", isNotNull());
         if (has(name)) {
             return (E) instances.get(name);
         }
@@ -72,7 +75,7 @@ public class SimpleApplicationContext extends AbstractNestableContext<Applicatio
      */
     @Override
     public <E> E get(Class<E> type) {
-        // TODO: assertion
+        assertThat(type, "beanType", isNotNull());
         final Collection<E> all = findInstances(type);
         if (all.isEmpty()) {
             return super.get(type);
@@ -88,7 +91,8 @@ public class SimpleApplicationContext extends AbstractNestableContext<Applicatio
      */
     @Override
     public <E> E get(String name, Class<E> type) {
-        // TODO: assertion(type)
+        assertThat(name, "beanName", isNotNull());
+        assertThat(type, "beanType", isNotNull());
         final Object bean = get(name);
         if (type.isInstance(bean)) {
             return type.cast(bean);
@@ -101,7 +105,7 @@ public class SimpleApplicationContext extends AbstractNestableContext<Applicatio
      */
     @Override
     public <E> Collection<E> getAll(Class<E> type) {
-        // TODO: assertion
+        assertThat(type, "beanType", isNotNull());
         final Set<E> allBeans = new HashSet<>();
         allBeans.addAll(findInstances(type));
         allBeans.addAll(super.getAll(type));
@@ -113,7 +117,7 @@ public class SimpleApplicationContext extends AbstractNestableContext<Applicatio
      */
     @Override
     public boolean has(String name) {
-        // TODO: assertion
+        assertThat(name, "beanName", isNotNull());
         return instances.containsKey(name);
     }
 
@@ -122,7 +126,7 @@ public class SimpleApplicationContext extends AbstractNestableContext<Applicatio
      */
     @Override
     public boolean has(Class<?> type) {
-        // TODO: assertion
+        assertThat(type, "beanType", isNotNull());
         return instances.values().stream().anyMatch(type::isInstance);
     }
 
@@ -131,7 +135,8 @@ public class SimpleApplicationContext extends AbstractNestableContext<Applicatio
      */
     @Override
     public boolean has(String name, Class<?> type) {
-        // TODO: assertion(type)
+        assertThat(name, "beanName", isNotNull());
+        assertThat(type, "beanType", isNotNull());
         return has(name) && type.isInstance(get(name));
     }
 

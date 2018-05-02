@@ -1,10 +1,11 @@
 package unchained;
 
-import unchained.Context;
-import unchained.Lifecycle;
-
 import java.util.Map;
 import java.util.Set;
+
+import static unchained.Utils.forceNotNull;
+import static unchained.commons.assertion.Assert.assertThat;
+import static unchained.commons.assertion.Assertions.isNotNull;
 
 /**
  * TODO: doc
@@ -16,8 +17,7 @@ public abstract class AbstractContext<L extends Lifecycle> implements Context<L>
     private final L lifecycle;
 
     protected AbstractContext(L lifecycle) {
-        // TODO: assertion
-        this.lifecycle = lifecycle;
+        this.lifecycle = forceNotNull(lifecycle, "lifecycle");
     }
 
     /**
@@ -41,7 +41,7 @@ public abstract class AbstractContext<L extends Lifecycle> implements Context<L>
     @Override
     @SuppressWarnings("unchecked")
     public <E> E property(String name) {
-        // TODO: assertion
+        assertThat(name, "propertyName", isNotNull());
         return (E) properties().get(name);
     }
 
@@ -50,7 +50,7 @@ public abstract class AbstractContext<L extends Lifecycle> implements Context<L>
      */
     @Override
     public boolean hasProperty(String name) {
-        // TODO: assertion
+        assertThat(name, "propertyName", isNotNull());
         return properties().containsKey(name);
     }
 

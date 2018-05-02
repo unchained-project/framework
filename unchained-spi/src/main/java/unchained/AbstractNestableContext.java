@@ -2,7 +2,12 @@ package unchained;
 
 import unchained.error.NoSuchBeanException;
 
-import java.util.*;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
 
 /**
  * TODO: doc
@@ -15,7 +20,6 @@ public abstract class AbstractNestableContext<L extends Lifecycle> extends Abstr
     private HashMap<String, Object> properties;
 
     protected AbstractNestableContext(L lifecycle) {
-        // TODO: assertion
         this(null, lifecycle);
         properties = new HashMap<>();
     }

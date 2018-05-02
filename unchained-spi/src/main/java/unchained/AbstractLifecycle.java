@@ -1,6 +1,6 @@
 package unchained;
 
-import unchained.Lifecycle;
+import static unchained.Utils.forceNotNull;
 
 public abstract class AbstractLifecycle implements Lifecycle {
 
@@ -15,8 +15,7 @@ public abstract class AbstractLifecycle implements Lifecycle {
     }
 
     protected AbstractLifecycle(Lifecycle lifecycle) {
-        // TODO: assertion
-        this(lifecycle.stopped());
+        this(forceNotNull(lifecycle, "lifecycle").stopped());
     }
 
     /**

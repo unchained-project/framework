@@ -3,6 +3,8 @@ package unchained;
 import java.util.LinkedList;
 import java.util.List;
 
+import static unchained.Utils.forceNotNull;
+
 public abstract class CompositeApplicationContext extends AbstractNestableContext<ApplicationLifecycle> implements ApplicationContext {
 
     private final List<ApplicationContext> contexts;
@@ -16,8 +18,7 @@ public abstract class CompositeApplicationContext extends AbstractNestableContex
     }
 
     protected CompositeApplicationContext(ApplicationContext parent, ApplicationLifecycle lifecycle, List<ApplicationContext> contexts) {
-        // TODO: assertion(lifecycle)
-        super(parent, lifecycle);
+        super(parent, forceNotNull(lifecycle, "lifecycle"));
         this.contexts = contexts == null ? new LinkedList<>() : contexts;
     }
 

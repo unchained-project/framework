@@ -2,6 +2,8 @@ package unchained;
 
 import java.util.concurrent.atomic.AtomicBoolean;
 
+import static unchained.Utils.forceNotNull;
+
 /**
  * TODO: doc
  */
@@ -14,8 +16,7 @@ public abstract class AbstractChainLifecycle extends AbstractLifecycle implement
     }
 
     protected AbstractChainLifecycle(Lifecycle lifecycle) {
-        // TODO: assertion
-        this(lifecycle.stopped());
+        this(forceNotNull(lifecycle, "lifecycle").stopped());
     }
 
     protected AbstractChainLifecycle(boolean stopped) {
