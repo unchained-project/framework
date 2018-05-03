@@ -1,7 +1,5 @@
 package unchained.error;
 
-import unchained.error.ContextException;
-
 public class TooManyBeansException extends ContextException {
 
     public TooManyBeansException(Class<?> type) {

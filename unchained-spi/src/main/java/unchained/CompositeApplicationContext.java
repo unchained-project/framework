@@ -1,25 +1,36 @@
 package unchained;
 
-import java.util.LinkedList;
-import java.util.List;
+import java.util.Map;
 
 import static unchained.Utils.forceNotNull;
 
-public abstract class CompositeApplicationContext extends AbstractNestableContext<ApplicationLifecycle> implements ApplicationContext {
+/**
+ * TODO: doc
+ */
+public class CompositeApplicationContext extends AbstractCompositeContext<
+    ApplicationLifecycle, ApplicationContext, CompositeApplicationContext> {
 
-    private final List<ApplicationContext> contexts;
-
+    /**
+     * TODO: doc
+     *
+     * @param lifecycle
+     */
     public CompositeApplicationContext(ApplicationLifecycle lifecycle) {
-        this(null, lifecycle, null);
+        super(lifecycle);
     }
 
+    /**
+     * TODO: doc
+     *
+     * @param parent
+     */
     public CompositeApplicationContext(ApplicationContext parent) {
-        this(parent, parent.lifecycle(), null);
+        super(forceNotNull(parent, "parent"), parent.lifecycle());
     }
 
-    protected CompositeApplicationContext(ApplicationContext parent, ApplicationLifecycle lifecycle, List<ApplicationContext> contexts) {
-        super(parent, forceNotNull(lifecycle, "lifecycle"));
-        this.contexts = contexts == null ? new LinkedList<>() : contexts;
+    @Override
+    protected Map<String, ? super Object> properties() {
+        return Utils.environment;
     }
 
 }

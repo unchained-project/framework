@@ -33,7 +33,7 @@ public abstract class AbstractChainContext<C extends ChainContext<C, L>, L exten
     }
 
     @Override
-    protected Map<String, Object> properties() {
+    protected Map<String, ? super Object> properties() {
         return properties;
     }
 

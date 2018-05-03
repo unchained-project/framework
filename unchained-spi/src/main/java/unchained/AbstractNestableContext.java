@@ -4,9 +4,7 @@ import unchained.error.NoSuchBeanException;
 
 import java.util.Collection;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Map;
 import java.util.Set;
 
 /**
@@ -17,11 +15,9 @@ import java.util.Set;
 public abstract class AbstractNestableContext<L extends Lifecycle> extends AbstractContext<L> {
 
     private final Context<? extends Lifecycle> parent;
-    private HashMap<String, Object> properties;
 
     protected AbstractNestableContext(L lifecycle) {
         this(null, lifecycle);
-        properties = new HashMap<>();
     }
 
     protected AbstractNestableContext(Context<? extends Lifecycle> parent, L lifecycle) {
@@ -73,13 +69,39 @@ public abstract class AbstractNestableContext<L extends Lifecycle> extends Abstr
         return Collections.emptySet();
     }
 
+    @Override
+    public boolean has(String name) {
+        if (parent != null) {
+            return parent.has(name);
+        }
+        return false;
+    }
+
+    @Override
+    public boolean has(Class<?> type) {
+        if (parent != null) {
+            return parent.has(type);
+        }
+        return false;
+
+    }
+
+    @Override
+    public boolean has(String name, Class<?> type) {
+        if (parent != null) {
+            return parent.has(name, type);
+        }
+        return false;
+    }
+
     /**
      * {@inheritDoc}
      */
     @Override
     public <E> E property(String name) {
-        if (super.hasProperty(name)) {
-            return super.property(name);
+        final E result = super.property(name);
+        if (result != null) {
+            return result;
         }
         if (parent != null) {
             return parent.property(name);
@@ -107,11 +129,6 @@ public abstract class AbstractNestableContext<L extends Lifecycle> extends Abstr
             return allNames;
         }
         return super.propertyNames();
-    }
-
-    @Override
-    protected Map<String, Object> properties() {
-        return properties;
     }
 
 }

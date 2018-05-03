@@ -50,11 +50,16 @@ public class SimpleApplicationContext extends AbstractNestableContext<Applicatio
         this.instances = MutabilityUtils.immutableCopy(instances);
     }
 
-    private <E> Collection<E> findInstances(Class<E> type) {
+    private <E> Collection<E> allOf(Class<E> type) {
         return instances.values().stream()
             .filter(type::isInstance)
             .map(type::cast)
             .collect(Collectors.toSet());
+    }
+
+    @Override
+    protected Map<String, ? super Object> properties() {
+        return Utils.environment;
     }
 
     /**
@@ -76,12 +81,12 @@ public class SimpleApplicationContext extends AbstractNestableContext<Applicatio
     @Override
     public <E> E get(Class<E> type) {
         assertThat(type, "beanType", isNotNull());
-        final Collection<E> all = findInstances(type);
-        if (all.isEmpty()) {
+        final Collection<E> beans = allOf(type);
+        if (beans.isEmpty()) {
             return super.get(type);
         }
-        if (all.size() == 1) {
-            return all.iterator().next();
+        if (beans.size() == 1) {
+            return beans.iterator().next();
         }
         throw new TooManyBeansException(type);
     }
@@ -107,7 +112,7 @@ public class SimpleApplicationContext extends AbstractNestableContext<Applicatio
     public <E> Collection<E> getAll(Class<E> type) {
         assertThat(type, "beanType", isNotNull());
         final Set<E> allBeans = new HashSet<>();
-        allBeans.addAll(findInstances(type));
+        allBeans.addAll(allOf(type));
         allBeans.addAll(super.getAll(type));
         return allBeans;
     }
@@ -118,7 +123,7 @@ public class SimpleApplicationContext extends AbstractNestableContext<Applicatio
     @Override
     public boolean has(String name) {
         assertThat(name, "beanName", isNotNull());
-        return instances.containsKey(name);
+        return instances.containsKey(name) || super.has(name);
     }
 
     /**
@@ -127,7 +132,7 @@ public class SimpleApplicationContext extends AbstractNestableContext<Applicatio
     @Override
     public boolean has(Class<?> type) {
         assertThat(type, "beanType", isNotNull());
-        return instances.values().stream().anyMatch(type::isInstance);
+        return instances.values().stream().anyMatch(type::isInstance) || super.has(type);
     }
 
     /**
@@ -137,7 +142,7 @@ public class SimpleApplicationContext extends AbstractNestableContext<Applicatio
     public boolean has(String name, Class<?> type) {
         assertThat(name, "beanName", isNotNull());
         assertThat(type, "beanType", isNotNull());
-        return has(name) && type.isInstance(get(name));
+        return has(name) && type.isInstance(get(name)) || super.has(name);
     }
 
 }

@@ -25,7 +25,7 @@ public abstract class AbstractContext<L extends Lifecycle> implements Context<L>
      *
      * @return
      */
-    protected abstract Map<String, Object> properties();
+    protected abstract Map<String, ? super Object> properties();
 
     /**
      * ${@inheritDoc}
