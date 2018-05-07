@@ -11,7 +11,9 @@ public interface Lifecycle {
      *
      * @return {@code true} if this lifecycle has already been started.
      */
-    boolean started();
+    default boolean started() {
+        return !stopped();
+    }
 
     /**
      * Indicates if the lifecycle is terminated or not.

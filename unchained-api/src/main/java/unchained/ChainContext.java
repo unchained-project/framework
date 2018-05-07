@@ -16,10 +16,10 @@ public interface ChainContext<
     /**
      * Sets the property to the given value.
      *
-     * @param property the property name.
+     * @param name the property name.
      * @param value the value.
      * @return the context itself to use for chaining method calls.
      */
-    C property(String property, Object value);
+    C property(String name, Object value);
 
 }
