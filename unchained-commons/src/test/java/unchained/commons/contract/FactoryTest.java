@@ -3,10 +3,12 @@ package unchained.commons.contract;
 import org.testng.annotations.Test;
 
 import java.util.Collection;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
 
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.is;
-import static org.hamcrest.Matchers.notNullValue;
+import static org.hamcrest.Matchers.*;
 
 public class FactoryTest {
 
@@ -50,6 +52,24 @@ public class FactoryTest {
     private static final FactoryA FACTORY_A = new FactoryA();
     private static final Factory<B> FACTORY_B = (arguments -> new B(arguments[0].toString()));
 
+    public static class Provider implements Factory.Provider {
+
+        private final Collection<Factory<?>> providers = new HashSet<>();
+
+        public Provider() {
+            providers.add(FACTORY_A);
+            providers.add(FACTORY_B);
+            providers.add(arguments -> new A1());
+            providers.add(arguments -> new A2());
+        }
+
+        @Override
+        public Collection<Factory<?>> all() {
+            return providers;
+        }
+
+    }
+
     @Test
     public void testType() {
         assertThat(FACTORY_A.type().toString(), is(A.class.toString()));
@@ -64,6 +84,17 @@ public class FactoryTest {
         assertThat(b, notNullValue());
         assertThat(a.foo, is("Hello"));
         assertThat(b.foo, is("World"));
+    }
+
+    @Test
+    public void testRegisteredProviders() {
+        assertThat(Factory.Provider.ALL.iterator().hasNext(), is(true));
+        assertThat((Provider) Factory.Provider.ALL.iterator().next(), isA(Provider.class));
+    }
+
+    @Test
+    public void testForType() throws Exception {
+        assertThat(Factory.forType(A.class), contains(FACTORY_A));
     }
 
 }
