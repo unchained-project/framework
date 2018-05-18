@@ -5,24 +5,33 @@ import java.util.Set;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
-public interface Registry<R extends Registry<R, I>, I> extends Stateful<R> {
+public interface Registry<T extends Registrable> {
 
-    default I get(String name) {
-        return get(name, (I) null);
+    void register(T value);
+
+    T get(String key);
+
+    default T get(String key, T defaultValue) {
+        return get(key, s -> defaultValue);
     }
 
-    I get(String name, I defaultValue);
-
-    I get(String name, Function<String, I> computer);
-
-    Set<String> keys();
-
-    Set<I> values();
+    default T get(String key, Function<String, T> computer) {
+        final T result = get(key);
+        return result == null ? computer.apply(key) : result;
+    }
 
     boolean has(String key);
 
-    default Map<String, I> toMap() {
+    Set<String> keys();
+
+    Set<T> values();
+
+    default Map<String, T> toMap() {
         return keys().stream().collect(Collectors.toMap(Function.identity(), this::get));
+    }
+
+    static <T extends Registrable> Registry<T> lookup(Class<T> type) {
+        return DefaultRegistry.lookup(type);
     }
 
 }
