@@ -1,5 +1,7 @@
 package unchained.commons.contract;
 
+import unchained.commons.error.FactoryNotFoundException;
+
 public interface Factory<T, A extends Factory.Arguments> extends Registrable {
 
     Class<T> type();
@@ -7,6 +9,12 @@ public interface Factory<T, A extends Factory.Arguments> extends Registrable {
     T create(A configuration);
 
     interface Arguments {}
+
+    class NoArgument implements Arguments {
+
+        public static final NoArgument INSTANCE = new NoArgument();
+
+    }
 
     @Override
     default String registryKey() {
@@ -17,9 +25,18 @@ public interface Factory<T, A extends Factory.Arguments> extends Registrable {
         Registry.lookup(Factory.class).register(factory);
     }
 
+    @SuppressWarnings("unchecked")
     static <T, A extends Arguments> Factory<T, A> forType(Class<T> type) {
-        return Registry.lookup(Factory.class).get(type.getCanonicalName());
         // WARNING: duplicate logic at `type.getCanonicalName()`.
+        Factory result = Registry.lookup(Factory.class).get(type.getCanonicalName());
+        if (result == null) {
+            throw new FactoryNotFoundException(type);
+        }
+        try {
+            return (Factory<T, A>) result;
+        } catch (ClassCastException e) {
+            throw new FactoryNotFoundException(type, e);
+        }
     }
 
 }

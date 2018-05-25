@@ -2,11 +2,10 @@ package unchained.commons.contract;
 
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
-import unchained.commons.assertion.Assertions;
+import unchained.commons.error.FactoryNotFoundException;
 
 import static unchained.commons.assertion.Assert.assertThat;
 import static unchained.commons.assertion.Assertions.*;
-import static unchained.commons.assertion.Assertions.isNotNull;
 
 public class FactoryTest {
 
@@ -52,10 +51,15 @@ public class FactoryTest {
     }
 
     @Test
-    public void testForType() throws Exception {
+    public void testForType() {
         final Factory<A, Factory.Arguments> factoryA = Factory.forType(A.class);
         assertThat(factoryA, "factory", isNotNull());
         assertThat(factoryA, "factory", isA(FactoryA.class));
+    }
+
+    @Test(expectedExceptions = FactoryNotFoundException.class)
+    public void testForTypeNonExisting() {
+        Factory<String, Factory.NoArgument> dummy = Factory.forType(String.class);
     }
 
     @Test
