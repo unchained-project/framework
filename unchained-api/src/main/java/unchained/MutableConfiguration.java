@@ -3,9 +3,9 @@ package unchained;
 /**
  * Mutable configuration.
  *
- * @param <C>
+ * @param <M>
  */
-public interface MutableConfiguration<C extends MutableConfiguration<C>> extends Configuration<C> {
+public interface MutableConfiguration<M extends MutableConfiguration> extends Configuration {
 
     /**
      * Enables the provided key by setting it to {@code true}.
@@ -13,7 +13,7 @@ public interface MutableConfiguration<C extends MutableConfiguration<C>> extends
      * @param key the key to enable.
      * @return the configuration itself to use for chaining method calls.
      */
-    default C enable(String key) {
+    default M enable(String key) {
         return set(key, true);
     }
 
@@ -23,7 +23,7 @@ public interface MutableConfiguration<C extends MutableConfiguration<C>> extends
      * @param option the option to enable.
      * @return the configuration itself to use for chaining method calls.
      */
-    default C enable(Option<?> option) {
+    default M enable(Option<Boolean> option) {
         return set(option, true);
     }
 
@@ -33,7 +33,7 @@ public interface MutableConfiguration<C extends MutableConfiguration<C>> extends
      * @param key the key to disable.
      * @return the configuration itself to use for chaining method calls.
      */
-    default C disable(String key) {
+    default M disable(String key) {
         return set(key, false);
     }
 
@@ -43,7 +43,7 @@ public interface MutableConfiguration<C extends MutableConfiguration<C>> extends
      * @param option the option to disable.
      * @return the configuration itself to use for chaining method calls.
      */
-    default C disable(Option<?> option) {
+    default M disable(Option<Boolean> option) {
         return set(option, false);
     }
 
@@ -54,7 +54,7 @@ public interface MutableConfiguration<C extends MutableConfiguration<C>> extends
      * @param value the value.
      * @return the configuration itself to use for chaining method calls.
      */
-    C set(String key, Object value);
+    <E> M set(String key, E value);
 
     /**
      * Sets the value of the provided option to the given value.
@@ -64,7 +64,7 @@ public interface MutableConfiguration<C extends MutableConfiguration<C>> extends
      * @param <E> the type of the value.
      * @return the configuration itself to use for chaining method calls.
      */
-    default <E> C set(Option<E> option, Object value) {
+    default <E> M set(Option<E> option, E value) {
         return set(option.key(), value);
     }
 
