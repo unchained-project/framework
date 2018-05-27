@@ -1,16 +1,14 @@
 package unchained.commons.contract;
 
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.locks.ReentrantReadWriteLock;
 
 class DefaultRegistry<T extends Registrable> implements Registry<T> {
 
     private final Map<String, T> entries = new ConcurrentHashMap<>();
 
-    DefaultRegistry() {}
+    private DefaultRegistry() {}
 
     @Override
     public T get(String key) {
@@ -34,21 +32,32 @@ class DefaultRegistry<T extends Registrable> implements Registry<T> {
 
     @Override
     public Set<T> values() {
-        final Set<T> result = new HashSet<>();
-        result.addAll(entries.values());
-        return Collections.unmodifiableSet(result);
+        return Collections.unmodifiableSet(new HashSet<>(entries.values()));
     }
 
-    static final Map<Class<?>, Registry<? extends Registrable>> ALL = new ConcurrentHashMap<>();
+    private static final Map<Class<?>, Registry<? extends Registrable>> ALL = new HashMap<>();
+    private static final ReentrantReadWriteLock LOCK = new ReentrantReadWriteLock();
 
     @SuppressWarnings("unchecked")
     static <T extends Registrable> Registry<T> lookup(Class<T> type) {
-        Registry<T> result = (Registry<T>) ALL.get(type);
-        if (result == null) {
-            result = new DefaultRegistry<>();
-            ALL.put(type, result);
+        LOCK.readLock().lock();
+        try {
+            Registry<T> result = (Registry<T>) ALL.get(type);
+            if (result == null) {
+                LOCK.readLock().unlock();
+                LOCK.writeLock().lock();
+                try {
+                    result = new DefaultRegistry<>();
+                    ALL.put(type, result);
+                    LOCK.readLock().lock();
+                } finally {
+                    LOCK.writeLock().unlock();
+                }
+            }
+            return result;
+        } finally {
+            LOCK.readLock().unlock();
         }
-        return result;
     }
 
 }
