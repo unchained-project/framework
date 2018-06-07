@@ -4,8 +4,8 @@ import java.util.Map;
 import java.util.Set;
 
 import static unchained.Utils.forceNotNull;
-import static unchained.commons.assertion.Assert.assertThat;
-import static unchained.commons.assertion.Assertions.isNotNull;
+import static unchained.assertion.Assert.assertThat;
+import static unchained.assertion.Assertions.isNotNull;
 
 /**
  * TODO: doc
