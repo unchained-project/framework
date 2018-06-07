@@ -5,8 +5,8 @@ import unchained.error.AmbiguousBeanSelectionException;
 import java.util.*;
 import java.util.stream.Collectors;
 
-import static unchained.commons.assertion.Assert.assertThat;
-import static unchained.commons.assertion.Assertions.isNotNull;
+import static unchained.assertion.Assert.assertThat;
+import static unchained.assertion.Assertions.isNotNull;
 
 /**
  * TODO: doc

@@ -1,14 +1,14 @@
 package unchained;
 
-import unchained.commons.utils.MutabilityUtils;
+import unchained.utils.MutabilityUtils;
 import unchained.error.TooManyBeansException;
 
 import java.util.*;
 import java.util.stream.Collectors;
 
 import static unchained.Utils.forceNotNull;
-import static unchained.commons.assertion.Assert.assertThat;
-import static unchained.commons.assertion.Assertions.isNotNull;
+import static unchained.assertion.Assert.assertThat;
+import static unchained.assertion.Assertions.isNotNull;
 
 /**
  * TODO: doc
