@@ -26,6 +26,7 @@
         <module>../unchained-commons</module>
         <module>../unchained-api</module>
         <module>../unchained-spi</module>
+        <module>../unchained-examples</module>
     </modules>
 
 </project>
