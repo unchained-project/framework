@@ -11,6 +11,10 @@ public interface Registry<T extends Registrable> {
 
     T get(String key);
 
+    default T get(Class<?> key) {
+        return get(key.getCanonicalName());
+    }
+
     default T get(String key, T defaultValue) {
         return get(key, s -> defaultValue);
     }
