@@ -4,28 +4,25 @@ import unchained.Input;
 
 import java.util.Map;
 import java.util.Set;
-import java.util.concurrent.CompletableFuture;
 
 /**
  * TODO: doc
- *
- * @param <T>
  */
-public interface Request<T> extends Input<RequestLifecycle, RequestContext> {
+public interface Request<I extends Request<I>> extends Input<RequestLifecycle, RequestContext>, PayloadReader<I> {
 
     /**
      * TODO: doc
      *
      * @return
      */
-    String uri();
+    String target();
 
     /**
      * TODO: doc
      *
-     * @param uri
+     * @param target
      */
-    void uri(String uri);
+    I target(String target);
 
     /**
      * TODO: doc
@@ -73,20 +70,6 @@ public interface Request<T> extends Input<RequestLifecycle, RequestContext> {
      * @param name
      * @param value
      */
-    <E> E header(String name, E value);
-
-    /**
-     * TODO: doc
-     *
-     * @return
-     */
-    CompletableFuture<T> payload();
-
-    /**
-     * TODO: doc
-     *
-     * @param payload
-     */
-    void payload(T payload);
+    <E> I header(String name, E value);
 
 }

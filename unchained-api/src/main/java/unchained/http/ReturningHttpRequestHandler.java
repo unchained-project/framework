@@ -2,17 +2,16 @@ package unchained.http;
 
 import unchained.web.RequestHandler;
 
+import java.io.IOException;
 import java.util.concurrent.CompletableFuture;
 
-public interface ReturningHttpRequestHandler extends RequestHandler<BodyReader, BodyWriter, HttpRequest, HttpResponse> {
+public interface ReturningHttpRequestHandler extends RequestHandler<HttpRequest, HttpResponse> {
 
     Object handle(HttpRequest request);
 
     @Override
-    default CompletableFuture<Void> execute(HttpRequest input, HttpResponse output) throws Exception {
-        return CompletableFuture
-            .allOf(input.payload(), output.payload())
-            .thenRunAsync(() -> output.payload().join().set(handle(input)));
+    default void handle(HttpRequest request, HttpResponse response) {
+        response.write(handle(request));
     }
 
 }

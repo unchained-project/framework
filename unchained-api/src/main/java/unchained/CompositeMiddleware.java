@@ -3,35 +3,37 @@ package unchained;
 /**
  * TODO: doc
  *
- * @param <W>
  * @param <L>
  * @param <C>
  * @param <I>
  * @param <O>
- * @param <M>
- * @param <Q>
- * @param <H>
+ * @param <S>
+ * @param <W>
+ * @param <K>
  */
-public interface CompositeMiddleware<
-    W extends CompositeMiddleware<W, L, C, I, O, M, Q, H>,
-    L extends ChainLifecycle,
-    C extends ChainContext<C, L>,
-    I extends Input<L, C>,
-    O extends Output<L, C, I>,
-    M extends Matcher<C, I, H>,
-    Q,
-    H> extends Middleware<L, C, I, O, Q> {
+public interface CompositeMiddleware<L extends ChainLifecycle, C extends ChainContext<L, C>, I extends Input<L, C>,
+    O extends Output<L, C, I>, S extends Selector<I, ?>, W extends CompositeMiddleware<L, C, I, O, S, W, K>, K>
+        extends Middleware<L, C, I, O, K> {
 
     /**
      * TODO: doc
      *
-     * @param matcher
      * @param first
      * @param rest
      * @param <N>
      * @return
      */
-    @SuppressWarnings("unchecked")
-    <N extends Middleware<L, C, I, O, ?>> W use(M matcher, N first, N... rest);
+    <N extends Middleware<L, C, I, O, ?>> W use(N first, N... rest);
+
+    /**
+     * TODO: doc
+     *
+     * @param selector
+     * @param first
+     * @param rest
+     * @param <N>
+     * @return
+     */
+    <N extends Middleware<L, C, I, O, ?>> W use(S selector, N first, N... rest);
 
 }

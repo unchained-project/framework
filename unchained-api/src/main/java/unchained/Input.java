@@ -6,9 +6,7 @@ package unchained;
  * @param <L> the lifecycle type.
  * @param <C> the context type.
  */
-public interface Input<
-    L extends ChainLifecycle,
-    C extends ChainContext<C, L>> {
+public interface Input<L extends ChainLifecycle, C extends ChainContext<L, C>> {
 
     /**
      * Gives access to the context associated with this input.

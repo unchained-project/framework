@@ -7,10 +7,7 @@ package unchained;
  * @param <C> the context type.
  * @param <I> the input type.
  */
-public interface Output<
-    L extends ChainLifecycle,
-    C extends ChainContext<C, L>,
-    I extends Input<L, C>> {
+public interface Output<L extends ChainLifecycle, C extends ChainContext<L, C>, I extends Input<L, C>> {
 
     /**
      * Gives access to the input associated with this output.
