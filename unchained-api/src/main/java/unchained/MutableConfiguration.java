@@ -91,4 +91,12 @@ public interface MutableConfiguration extends Configuration {
         return unset(option.key());
     }
 
+    /**
+     * Snapshots this configuration object and returns an immutable copy of it. Further changes to this object do not
+     * reflect in the returned copy.
+     *
+     * @return A immutable snapshot of this configuration.
+     */
+    Configuration snapshot();
+
 }

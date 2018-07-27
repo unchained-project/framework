@@ -43,7 +43,7 @@ public interface HttpRouteDefiner<T> {
     }
 
     default <N extends Middleware<RequestLifecycle, RequestContext, HttpRequest, HttpResponse, ?>> T get(String pattern, N first, N... rest) {
-        return custom(Method.GET, pattern, first, rest);
+        return custom(HttpMethod.GET, pattern, first, rest);
     }
 
     default T get(String pattern, HttpRequestHandler first, HttpRequestHandler... rest) {

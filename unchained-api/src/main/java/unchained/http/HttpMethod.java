@@ -1,6 +1,6 @@
 package unchained.http;
 
-public interface Method {
+public interface HttpMethod {
 
     String GET = "GET";
 

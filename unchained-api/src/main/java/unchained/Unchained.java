@@ -5,31 +5,42 @@ import unchained.http.HttpApplication;
 import unchained.http.HttpRoute;
 import unchained.web.Route;
 
-public interface Unchained {
+public final class Unchained {
 
-    static Configuration emptyConfiguration() {
-        // TODO: implement
-        return null;
+    private Unchained() { }
+
+    public static Configuration emptyConfiguration() {
+        return Factory.forType(Configuration.class).create();
     }
 
-    static MutableConfiguration newConfiguration() {
+    public static MutableConfiguration newConfiguration() {
         return Factory.forType(MutableConfiguration.class).create();
     }
 
-    static HttpApplication newHttpApplication(Configuration configuration) {
+    public static HttpApplication newHttpApplication(Configuration configuration) {
         return newApplication(HttpApplication.class, configuration);
     }
 
-    static <T extends Application> T newApplication(Class<T> type, Configuration configuration) {
+    public static <T extends Application> T newApplication(Class<T> type, Configuration configuration) {
         return Factory.forType(type).create(configuration);
     }
 
-    static <T extends Route> T newRoute(Class<T> type) {
+    public static <T extends Route> T newRoute(Class<T> type) {
         return Factory.forType(type).create();
     }
 
-    static HttpRoute newHttpRoute() {
+    public static HttpRoute newHttpRoute() {
         return newRoute(HttpRoute.class);
+    }
+
+    static {
+        try {
+            // Workaround to ensure class initializer is executed.
+            ClassLoader.getSystemClassLoader().loadClass("unchained.Utils")
+                .getDeclaredField("environment").get(null);
+        } catch (Exception ignored) {
+            ignored.printStackTrace();
+        }
     }
 
 }
