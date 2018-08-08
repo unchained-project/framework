@@ -51,14 +51,14 @@ public class FactoryTest {
     }
 
     @Test
-    public void testForType() {
+    public void testForExistingType() {
         final Factory<A, Void> factoryA = Factory.forType(A.class);
         assertThat(factoryA, "factory", isNotNull());
         assertThat(factoryA, "factory", isA(FactoryA.class));
     }
 
     @Test(expectedExceptions = FactoryNotFoundException.class)
-    public void testForTypeNonExisting() {
+    public void testForNonExistingType() {
         Factory<String, Void> dummy = Factory.forType(String.class);
     }
 
