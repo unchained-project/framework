@@ -4,15 +4,14 @@ import unchained.Output;
 
 import java.util.Map;
 import java.util.Set;
-import java.util.concurrent.CompletableFuture;
 
 /**
+ * TODO: doc
  *
- * @param <S>
- * @param <T>
  * @param <I>
  */
-public interface Response<S, T, I extends Request<S>> extends Output<RequestLifecycle, RequestContext, I> {
+public interface Response<I extends Request<I>, O extends Response<I, O>> extends
+    Output<RequestLifecycle, RequestContext, I>, PayloadWriter<O> {
 
     /**
      * TODO: doc
@@ -60,20 +59,6 @@ public interface Response<S, T, I extends Request<S>> extends Output<RequestLife
      * @param name
      * @param value
      */
-    <E> E header(String name, E value);
-
-    /**
-     * TODO: doc
-     *
-     * @return
-     */
-    CompletableFuture<T> payload();
-
-    /**
-     * TODO: doc
-     *
-     * @param payload
-     */
-    void payload(T payload);
+    <E> O header(String name, E value);
 
 }

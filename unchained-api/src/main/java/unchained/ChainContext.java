@@ -8,10 +8,7 @@ package unchained;
  * @param <L> the lifecycle type.
  * @param <C> the context type.
  */
-public interface ChainContext<
-    C extends ChainContext<C, L>,
-    L extends ChainLifecycle
-    > extends Context<L> {
+public interface ChainContext<L extends ChainLifecycle, C extends ChainContext<L, C>> extends Context<L> {
 
     /**
      * Sets the property to the given value.

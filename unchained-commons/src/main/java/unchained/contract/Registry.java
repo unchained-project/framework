@@ -5,32 +5,33 @@ import java.util.Set;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
-public interface Registry<T extends Registrable> {
+public interface Registry<K, T extends Registrable<K>> {
 
     void register(T value);
 
-    T get(String key);
+    T get(K key);
 
-    default T get(String key, T defaultValue) {
+    default T get(K key, T defaultValue) {
         return get(key, s -> defaultValue);
     }
 
-    default T get(String key, Function<String, T> computer) {
+    default T get(K key, Function<K, T> computer) {
         final T result = get(key);
         return result == null ? computer.apply(key) : result;
     }
 
-    boolean has(String key);
+    boolean has(K key);
 
-    Set<String> keys();
+    Set<K> keys();
 
     Set<T> values();
 
-    default Map<String, T> toMap() {
+    default Map<K, T> toMap() {
         return keys().stream().collect(Collectors.toMap(Function.identity(), this::get));
     }
 
-    static <T extends Registrable> Registry<T> lookup(Class<T> type) {
+    @SuppressWarnings("unchecked")
+    static <K, T extends Registrable<K>> Registry<K, T> lookup(Class<T> type) {
         return DefaultRegistry.lookup(type);
     }
 

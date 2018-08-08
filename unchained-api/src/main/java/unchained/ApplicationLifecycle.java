@@ -6,7 +6,7 @@ package unchained;
 public interface ApplicationLifecycle extends Lifecycle {
 
     /**
-     * TODO
+     * TODO: doc
      */
     void start();
 

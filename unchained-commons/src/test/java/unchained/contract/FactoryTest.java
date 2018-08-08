@@ -17,7 +17,7 @@ public class FactoryTest {
 
     }
 
-    private static class ArgumentsA implements Factory.Arguments {
+    private static class ArgumentsA {
 
         private String foo;
 
@@ -51,20 +51,20 @@ public class FactoryTest {
     }
 
     @Test
-    public void testForType() {
-        final Factory<A, Factory.Arguments> factoryA = Factory.forType(A.class);
+    public void testForExistingType() {
+        final Factory<A, Void> factoryA = Factory.forType(A.class);
         assertThat(factoryA, "factory", isNotNull());
         assertThat(factoryA, "factory", isA(FactoryA.class));
     }
 
     @Test(expectedExceptions = FactoryNotFoundException.class)
-    public void testForTypeNonExisting() {
-        Factory<String, Factory.NoArgument> dummy = Factory.forType(String.class);
+    public void testForNonExistingType() {
+        Factory<String, Void> dummy = Factory.forType(String.class);
     }
 
     @Test
     public void testType() {
-        final Factory<A, Factory.Arguments> factoryA = Factory.forType(A.class);
+        final Factory<A, Void> factoryA = Factory.forType(A.class);
         assertThat(factoryA.type(), "type", is(A.class));
     }
 

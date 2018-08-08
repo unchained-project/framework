@@ -1,7 +1,7 @@
 package unchained.contract;
 
-public interface Registrable {
+public interface Registrable<K> {
 
-    String registryKey();
+    K registryKey();
 
 }

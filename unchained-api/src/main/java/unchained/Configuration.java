@@ -114,9 +114,7 @@ public interface Configuration {
      * @param <E> the type.
      * @return the value or {@code null} if it was never configured.
      */
-    default <E> E get(String key) {
-        return get(key, null);
-    }
+    <E> E get(String key);
 
     /**
      * <p>Returns the value of the given option, or the corresponding default value for this option if it was never
@@ -143,6 +141,8 @@ public interface Configuration {
      * @param <E> the type.
      * @return the configured value or the provided default.
      */
-    <E> E get(String key, E defaultValue);
+    default <E> E get(String key, E defaultValue) {
+        return has(key) ? get(key) : defaultValue;
+    }
 
  }

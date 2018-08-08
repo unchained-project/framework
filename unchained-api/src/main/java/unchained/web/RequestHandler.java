@@ -2,17 +2,22 @@ package unchained.web;
 
 import unchained.Middleware;
 
+import java.util.concurrent.CompletableFuture;
+
 /**
  * TODO: doc
  *
- * @param <S>
- * @param <T>
  * @param <I>
  * @param <O>
  */
-public interface RequestHandler<
-    S, T,
-    I extends Request<S>,
-    O extends Response<S, T, I>> extends Middleware<RequestLifecycle, RequestContext, I, O, Void> {
+public interface RequestHandler<I extends Request<I>, O extends Response<I,O>>
+    extends Middleware<RequestLifecycle, RequestContext, I, O, Void> {
 
+    void handle(I input, O output);
+
+    @Override
+    default CompletableFuture<Void> execute(I input, O output) throws Exception {
+        return CompletableFuture
+            .runAsync(() -> handle(input, output), input.context().executor());
+    }
 }

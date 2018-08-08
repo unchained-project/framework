@@ -14,15 +14,20 @@
         <relativePath>../unchained-parent/pom.xml</relativePath>
     </parent>
 
-    <artifactId>unchained-api</artifactId>
+    <artifactId>unchained-examples</artifactId>
     <packaging>jar</packaging>
 
-    <name>Unchained: API</name>
+    <name>Unchained: Examples</name>
 
     <dependencies>
         <dependency>
             <groupId>${project.groupId}</groupId>
-            <artifactId>unchained-commons</artifactId>
+            <artifactId>unchained-api</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>unchained-spi</artifactId>
             <version>${project.version}</version>
         </dependency>
         <dependency>
