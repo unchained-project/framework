@@ -35,9 +35,7 @@ public final class Unchained {
 
     static {
         try {
-            // Workaround to ensure class initializer is executed.
-            ClassLoader.getSystemClassLoader().loadClass("unchained.Utils")
-                .getDeclaredField("environment").get(null);
+            Class.forName("unchained.Utils");
         } catch (Exception ignored) {
             ignored.printStackTrace();
         }
